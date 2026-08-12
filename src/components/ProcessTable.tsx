@@ -130,14 +130,14 @@ export const ProcessTable: React.FC<ProcessTableProps> = ({
           <thead>
             <tr>
               <th style={{ width: '40px' }}></th>
-              <th>Projeto</th>
-              <th>CUOS (Uso do Solo)</th>
-              <th>Órgão Licenciador</th>
-              <th>Consulta Órgão</th>
-              <th>Cadastros</th>
-              <th>Reunião Órgão</th>
-              <th>Situação do Licenciamento</th>
-              <th style={{ textAlign: 'right' }}>Ações</th>
+              <th style={{ minWidth: '200px' }}>Projeto</th>
+              <th style={{ minWidth: '140px' }}>CUOS (Uso do Solo)</th>
+              <th style={{ minWidth: '130px' }}>Órgão Licenciador</th>
+              <th style={{ minWidth: '120px' }}>Consulta Órgão</th>
+              <th style={{ minWidth: '100px' }}>Cadastros</th>
+              <th style={{ minWidth: '120px' }}>Reunião Órgão</th>
+              <th style={{ minWidth: '180px' }}>Situação do Licenciamento</th>
+              <th style={{ minWidth: '180px', textAlign: 'right' }}>Ações</th>
             </tr>
           </thead>
           <tbody>
