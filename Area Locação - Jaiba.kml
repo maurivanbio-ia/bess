@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Area Locação - Jaiba.kmz</name>
+	<open>1</open>
+	<atom:link rel="app" href="https://www.google.com/earth/about/versions/#earth-pro" title="Google Earth Pro 7.3.7.1155"></atom:link>
+	<Schema name="rea_locao_10hafinal" id="rea_locao_10hafinal">
+		<SimpleField type="int" name="Id">
+		</SimpleField>
+		<SimpleField type="float" name="area">
+		</SimpleField>
+	</Schema>
+	<Style id="style">
+		<LineStyle>
+			<color>ff0000ff</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>b3ffffff</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="style0">
+		<LineStyle>
+			<color>ff0000ff</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>b3ffffff</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="stylemap_id0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark id="rea_locao_10hafinal.1">
+		<name>Area Locação</name>
+		<styleUrl>#stylemap_id0</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#rea_locao_10hafinal">
+				<SimpleData name="Id">0</SimpleData>
+				<SimpleData name="area">10.06569685140</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<MultiGeometry>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-43.7330657869999,-15.2605624519999,0 -43.736134255,-15.2620944769999,0 -43.7371818297763,-15.2601860045121,0 -43.737118169804,-15.2598763773164,0 -43.7342378113558,-15.2583446292532,0 -43.7330657869999,-15.2605624519999,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</MultiGeometry>
+	</Placemark>
+</Document>
+</kml>
