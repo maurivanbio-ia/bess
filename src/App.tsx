@@ -42,7 +42,16 @@ export const App: React.FC = () => {
   });
 
   // Default theme is 'light' (fundo branco) per user requirement
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('bess_theme');
+    return (saved as 'light' | 'dark') || 'light';
+  });
+
+  // Apply theme to document and save to localStorage
+  useEffect(() => {
+    localStorage.setItem('bess_theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
   const [activeTab, setActiveTab] = useState<'dashboard' | 'geoportal' | 'gantt' | 'table' | 'documents' | 'report'>('dashboard');
 
   // Filters & Search
@@ -253,7 +262,8 @@ export const App: React.FC = () => {
         {/* Left Sidebar Menu */}
         <Sidebar
           activeTab={activeTab}
-          onTabChange={setActiveTab}
+          theme={theme}
+          onToggleTheme={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')}
           documentsCount={documents.length}
           projectsCount={filteredProjects.length}
           onOpenNewTratativa={handleOpenTratativaModal}

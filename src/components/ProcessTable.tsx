@@ -12,8 +12,10 @@ import {
   Users, 
   Info,
   Paperclip,
-  MessageSquare
+  MessageSquare,
+  Download
 } from 'lucide-react';
+import { exportProjectToPDF } from '../utils/pdfGenerator';
 
 interface ProcessTableProps {
   projects: BESSProject[];
@@ -214,14 +216,24 @@ export const ProcessTable: React.FC<ProcessTableProps> = ({
                         </div>
                       </td>
                       <td style={{ textAlign: 'right' }}>
-                        <button 
-                          className="btn btn-outline"
-                          style={{ padding: '0.35rem 0.65rem', fontSize: '0.775rem' }}
-                          onClick={() => onEditProject(proj)}
-                          title="Editar Processo BESS"
-                        >
-                          <Edit3 size={14} /> Editar
-                        </button>
+                        <div style={{ display: 'flex', gap: '0.25rem', justifyContent: 'flex-end' }}>
+                          <button 
+                            className="btn btn-outline"
+                            style={{ padding: '0.35rem 0.5rem', fontSize: '0.775rem' }}
+                            onClick={() => exportProjectToPDF(proj)}
+                            title="Baixar Dossiê PDF"
+                          >
+                            <Download size={13} />
+                          </button>
+                          <button 
+                            className="btn btn-outline"
+                            style={{ padding: '0.35rem 0.65rem', fontSize: '0.775rem' }}
+                            onClick={() => onEditProject(proj)}
+                            title="Editar Processo BESS"
+                          >
+                            <Edit3 size={13} /> Editar
+                          </button>
+                        </div>
                       </td>
                     </tr>
 

@@ -8,7 +8,9 @@ import {
   FileSpreadsheet, 
   MessageSquare, 
   HardDrive,
-  ChevronRight
+  ChevronRight,
+  Moon,
+  Sun
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -16,6 +18,8 @@ interface SidebarProps {
   onTabChange: (tab: 'dashboard' | 'geoportal' | 'gantt' | 'table' | 'documents' | 'report') => void;
   documentsCount: number;
   projectsCount: number;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
   onOpenNewTratativa: () => void;
 }
 
@@ -24,6 +28,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onTabChange,
   documentsCount,
   projectsCount,
+  theme,
+  onToggleTheme,
   onOpenNewTratativa
 }) => {
   const menuItems = [
@@ -119,6 +125,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Sidebar Footer Credit */}
         <div className="sidebar-footer">
+          <button 
+            className="sidebar-action-btn"
+            style={{ marginBottom: '1rem', background: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
+            onClick={onToggleTheme}
+          >
+            {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
+            {theme === 'light' ? ' Modo Escuro' : ' Modo Claro'}
+          </button>
+          
           <span>Plataforma BESS v2.4</span>
           <span className="credit">Criado por Maurivan Vaz Ribeiro</span>
         </div>
