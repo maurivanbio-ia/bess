@@ -256,7 +256,6 @@ export const App: React.FC = () => {
           onTabChange={setActiveTab}
           documentsCount={documents.length}
           projectsCount={filteredProjects.length}
-          onOpenNewDoc={handleOpenNewDoc}
           onOpenNewTratativa={handleOpenTratativaModal}
         />
 
@@ -273,13 +272,7 @@ export const App: React.FC = () => {
             </div>
 
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button 
-                className="btn btn-outline"
-                style={{ padding: '0.25rem 0.6rem', fontSize: '0.75rem' }}
-                onClick={() => handleOpenNewDoc()}
-              >
-                <FileText size={13} /> + Novo Documento
-              </button>
+
               <button 
                 className="btn btn-outline"
                 style={{ padding: '0.25rem 0.6rem', fontSize: '0.75rem' }}

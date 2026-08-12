@@ -16,7 +16,6 @@ interface SidebarProps {
   onTabChange: (tab: 'dashboard' | 'geoportal' | 'gantt' | 'table' | 'documents' | 'report') => void;
   documentsCount: number;
   projectsCount: number;
-  onOpenNewDoc: () => void;
   onOpenNewTratativa: () => void;
 }
 
@@ -25,7 +24,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onTabChange,
   documentsCount,
   projectsCount,
-  onOpenNewDoc,
   onOpenNewTratativa
 }) => {
   const menuItems = [
@@ -112,9 +110,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span>AÇÕES RÁPIDAS</span>
           </div>
 
-          <button className="sidebar-action-btn primary" onClick={onOpenNewDoc}>
-            <FileText size={15} /> + Inserir Documento
-          </button>
+
 
           <button className="sidebar-action-btn secondary" onClick={onOpenNewTratativa}>
             <MessageSquare size={15} /> + Nova Tratativa
