@@ -16,7 +16,8 @@ import {
   PhoneCall,
   Video,
   Mail,
-  FileCheck
+  FileCheck,
+  Pin
 } from 'lucide-react';
 
 interface GanttTimelineProps {
@@ -26,6 +27,7 @@ interface GanttTimelineProps {
 
 export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTratativaModal }) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || '');
+  const [activeTratativaTooltip, setActiveTratativaTooltip] = useState<EnvironmentalInteraction | null>(null);
 
   const selectedProject = projects.find(p => p.id === selectedProjectId) || projects[0];
 
@@ -62,16 +64,16 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
   return (
     <div className="timeline-section" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       
-      {/* 1. Visão Geral do Cronograma (Gantt Macro) */}
+      {/* 1. Visão Geral do Cronograma (Gantt Macro com Tratativas Marcadas) */}
       <div className="glass-panel" style={{ padding: '1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h3 style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Calendar size={18} style={{ color: 'var(--brasol-teal)' }} />
-              Cronograma Executivo de Licenciamento (Gantt BESS)
+              Cronograma Executivo de Licenciamento (Gantt BESS & Tratativas Marcadas)
             </h3>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-              Acompanhamento de prazos, etapas críticas e avanço percentual por projeto
+              Acompanhamento de prazos, etapas críticas, avanço percentual e marcadores de tratativas ambientais
             </p>
           </div>
 
@@ -83,6 +85,7 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
           </button>
         </div>
 
+        {/* Gantt Table */}
         <div className="gantt-table-wrapper">
           <table className="gantt-table">
             <thead>
@@ -91,7 +94,7 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
                 <th>Órgão Licenciador</th>
                 <th>Início</th>
                 <th>Previsão Conclusão</th>
-                <th>Progresso</th>
+                <th>Progresso & Tratativas Marcadas</th>
                 <th>Etapa Atual</th>
                 <th>Status Risco</th>
               </tr>
@@ -100,6 +103,8 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
               {projects.map((proj) => {
                 const isSelected = proj.id === selectedProjectId;
                 const isCancelled = proj.statusCategoria === 'Cancelado por Opção da Brasol';
+                const tratativasCount = proj.tratativas?.length || 0;
+
                 return (
                   <tr 
                     key={proj.id}
@@ -119,26 +124,38 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
                     <td>{proj.orgaoLicenciador}</td>
                     <td>{proj.dataInicio}</td>
                     <td>{proj.dataPrevisaoConclusao}</td>
-                    <td style={{ width: '180px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <div className="progress-bar-bg">
-                          <div 
-                            className="progress-bar-fill" 
-                            style={{ 
-                              width: `${proj.progressoPct}%`,
-                              background: isCancelled 
-                                ? '#ef4444' 
-                                : proj.progressoPct === 100 
-                                  ? '#059669' 
-                                  : 'linear-gradient(90deg, #0369a1 0%, #059669 100%)'
-                            }} 
-                          />
+                    
+                    {/* Visual Progress Bar with Tratativas Pins */}
+                    <td style={{ width: '220px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <div className="progress-bar-bg" style={{ position: 'relative', height: '10px' }}>
+                            <div 
+                              className="progress-bar-fill" 
+                              style={{ 
+                                width: `${proj.progressoPct}%`,
+                                background: isCancelled 
+                                  ? '#ef4444' 
+                                  : proj.progressoPct === 100 
+                                    ? '#059669' 
+                                    : 'linear-gradient(90deg, #0369a1 0%, #059669 100%)'
+                              }} 
+                            />
+                          </div>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 700, minWidth: '35px' }}>
+                            {proj.progressoPct}%
+                          </span>
                         </div>
-                        <span style={{ fontSize: '0.75rem', fontWeight: 700, minWidth: '35px' }}>
-                          {proj.progressoPct}%
-                        </span>
+
+                        {/* Tratativas Pin Indicator */}
+                        {tratativasCount > 0 && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.7rem', color: 'var(--brasol-teal)', fontWeight: 600 }}>
+                            <MessageSquare size={11} /> {tratativasCount} tratativa(s) registrada(s)
+                          </div>
+                        )}
                       </div>
                     </td>
+
                     <td style={{ fontSize: '0.8rem' }}>
                       <span style={{ color: isCancelled ? '#dc2626' : undefined, fontWeight: isCancelled ? 700 : 400 }}>
                         {proj.etapaAtual}
@@ -161,7 +178,7 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
         </div>
       </div>
 
-      {/* 2. Linha do Tempo de Etapas & Tratativas do Projeto Selecionado */}
+      {/* 2. Linha do Tempo de Etapas & Tratativas Marcadas do Projeto Selecionado */}
       {selectedProject && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
           
@@ -225,16 +242,16 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
             </div>
           </div>
 
-          {/* Coluna Direita: Tratativas com o Órgão Ambiental */}
+          {/* Coluna Direita: Tratativas com o Órgão Ambiental Marcadas na Linha do Tempo */}
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <div>
                 <h3 style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <MessageSquare size={18} style={{ color: 'var(--brasol-teal)' }} />
-                  Tratativas com o Órgão Ambiental ({selectedProject.orgaoLicenciador})
+                  Tratativas Ambientais Marcadas ({selectedProject.orgaoLicenciador})
                 </h3>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                  Registros detalhados de reuniões, contatos e atendimentos técnicos
+                  Histórico de contatos com atendente, horário, data e resumo da tratativa
                 </p>
               </div>
 
@@ -247,11 +264,19 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
               </button>
             </div>
 
-            {/* Tratativas Timeline List */}
+            {/* Tratativas Timeline Feed */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxHeight: '520px', overflowY: 'auto' }}>
               {(!selectedProject.tratativas || selectedProject.tratativas.length === 0) ? (
-                <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-                  Nenhuma tratativa com o órgão registrada para este empreendimento ainda.
+                <div style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
+                  <MessageSquare size={32} style={{ color: 'var(--text-muted)', opacity: 0.4, marginBottom: '0.5rem' }} />
+                  <div>Nenhuma tratativa registrada para este empreendimento ainda.</div>
+                  <button 
+                    className="btn btn-primary" 
+                    style={{ marginTop: '0.75rem', fontSize: '0.8rem' }}
+                    onClick={() => onOpenTratativaModal(selectedProject.id)}
+                  >
+                    <Plus size={14} /> Registrar Primeira Tratativa
+                  </button>
                 </div>
               ) : (
                 selectedProject.tratativas.map((t) => (

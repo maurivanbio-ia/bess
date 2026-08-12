@@ -7,7 +7,7 @@ import {
   Table, 
   FileSpreadsheet, 
   MessageSquare, 
-  Building2,
+  HardDrive,
   ChevronRight
 } from 'lucide-react';
 
@@ -49,9 +49,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       id: 'documents',
-      label: 'Gestão Documental',
-      icon: FileText,
-      badge: documentsCount.toString()
+      label: 'Documentos & Google Drive',
+      icon: HardDrive,
+      badge: documentsCount > 0 ? documentsCount.toString() : 'Drive'
     },
     {
       id: 'table',
@@ -113,7 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           <button className="sidebar-action-btn primary" onClick={onOpenNewDoc}>
-            <FileText size={15} /> + Novo Documento
+            <FileText size={15} /> + Inserir Documento
           </button>
 
           <button className="sidebar-action-btn secondary" onClick={onOpenNewTratativa}>

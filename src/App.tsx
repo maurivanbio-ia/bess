@@ -8,7 +8,7 @@ import { GanttTimeline } from './components/GanttTimeline';
 import { ProcessTable } from './components/ProcessTable';
 import { ProcessModal } from './components/ProcessModal';
 import { TratativaModal } from './components/TratativaModal';
-import { DocumentManager } from './components/DocumentManager';
+import { DriveFileManager } from './components/DriveFileManager';
 import { DocumentModal } from './components/DocumentModal';
 import { Geoportal } from './components/Geoportal';
 import { Footer } from './components/Footer';
@@ -28,7 +28,7 @@ export const App: React.FC = () => {
     return saved ? JSON.parse(saved) : INITIAL_BESS_PROJECTS;
   });
 
-  // Documents state initialized as empty [] per user request ("apague todos os documentos")
+  // Documents state initialized with local storage or empty list
   const [documents, setDocuments] = useState<BESSDocument[]>(() => {
     const savedDocs = localStorage.getItem('brasol_bess_documents');
     if (savedDocs) {
@@ -148,6 +148,32 @@ export const App: React.FC = () => {
   const handleClearAllDocuments = () => {
     setDocuments([]);
     localStorage.removeItem('brasol_bess_documents');
+  };
+
+  // Handle Drag and Drop files upload into Drive File Manager
+  const handleUploadDropFiles = (files: FileList, targetProjectId?: string) => {
+    const newDocs: BESSDocument[] = [];
+    Array.from(files).forEach((file, index) => {
+      const project = projects.find(p => p.id === targetProjectId) || projects[0];
+      const docName = file.name.replace(/\.[^/.]+$/, "");
+      const isKmz = file.name.toLowerCase().endsWith('.kmz') || file.name.toLowerCase().endsWith('.kml');
+
+      newDocs.push({
+        id: `doc-drop-${Date.now()}-${index}`,
+        projectId: project ? project.id : 'bess-001',
+        projectName: project ? project.nome : 'Geral BESS',
+        nome: docName,
+        tipo: isKmz ? 'KMZ / Geoespacial' : 'CUOS',
+        status: 'Emitido / Válido',
+        dataEmissao: new Date().toISOString().split('T')[0],
+        nomeArquivoOriginal: file.name,
+        observacoes: `Arquivo enviado via arrastar e soltar (${(file.size / 1024).toFixed(1)} KB) no repositório digital.`,
+        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)',
+        dataCadastro: new Date().toISOString().split('T')[0]
+      });
+    });
+
+    setDocuments(prev => [...newDocs, ...prev]);
   };
 
   const handleOpenEdit = (project: BESSProject) => {
@@ -290,7 +316,7 @@ export const App: React.FC = () => {
             </div>
           )}
 
-          {/* Tab 3: Cronograma & Linha do Tempo de Tratativas */}
+          {/* Tab 3: Cronograma & Linha do Tempo de Tratativas Marcadas */}
           {activeTab === 'gantt' && (
             <div>
               <GanttTimeline 
@@ -300,15 +326,16 @@ export const App: React.FC = () => {
             </div>
           )}
 
-          {/* Tab 4: Gestão Documental completa */}
+          {/* Tab 4: Repositório de Documentos & Google Drive Integrado */}
           {activeTab === 'documents' && (
             <div>
-              <DocumentManager
+              <DriveFileManager
                 projects={projects}
                 documents={documents}
                 onOpenNewDocument={handleOpenNewDoc}
                 onEditDocument={handleOpenEditDoc}
                 onDeleteDocument={handleDeleteDocument}
+                onUploadDropFiles={handleUploadDropFiles}
                 onClearAllDocuments={handleClearAllDocuments}
               />
             </div>
