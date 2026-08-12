@@ -123,56 +123,8 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     historico: [
       { data: '2024-06-25', autor: 'EcoBrasil Team', acao: 'Emissão Concluída', detalhe: 'Certidão de dispensa liberada no portal IMA-SC.' }
     ],
-    documentos: [
-      { nome: 'CUOS_Jardim_da_Serra.pdf', tipo: 'CUOS', status: 'Aprovado' },
-      { nome: 'Dispensa_IMA_SC.pdf', tipo: 'Licença/Dispensa', status: 'Aprovado' }
-    ],
-    documentosList: [
-      {
-        id: 'doc-001',
-        projectId: 'bess-001',
-        projectName: 'Jardim da Serra - SC',
-        nome: 'Certidão de Uso e Ocupação do Solo - CUOS nº 452/2024',
-        tipo: 'CUOS',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-04-10',
-        dataValidade: '2026-04-10',
-        numeroProtocolo: 'CUOS-2024-0452-JS',
-        observacoes: 'Certidão de Uso e Ocupação do Solo emitida pela prefeitura municipal com aceite para instalação do BESS.',
-        nomeArquivoOriginal: 'CUOS_Jardim_da_Serra.pdf',
-        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)',
-        dataCadastro: '2024-04-12'
-      },
-      {
-        id: 'doc-002',
-        projectId: 'bess-001',
-        projectName: 'Jardim da Serra - SC',
-        nome: 'Certidão de Dispensa de Licenciamento Ambiental (DLA-IMA)',
-        tipo: 'Certidão / Licença',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-06-25',
-        dataValidade: '2028-06-25',
-        numeroProtocolo: 'DLA-IMA-2024-8891',
-        observacoes: 'Certidão oficial do IMA-SC liberando a obra do sistema BESS.',
-        nomeArquivoOriginal: 'Dispensa_IMA_SC.pdf',
-        cadastradoPor: 'EcoBrasil Consultoria',
-        dataCadastro: '2024-06-26'
-      },
-      {
-        id: 'doc-003',
-        projectId: 'bess-001',
-        projectName: 'Jardim da Serra - SC',
-        nome: 'Polígono KMZ de Levantamento Perimetral (8.2 ha)',
-        tipo: 'KMZ / Geoespacial',
-        status: 'Emitido / Válido',
-        dataEmissao: '2025-01-10',
-        numeroProtocolo: 'GEO-SC-2025-01',
-        observacoes: 'Coordenadas perimétricas validadas em campo com área total de 8.2 hectares.',
-        nomeArquivoOriginal: '20251001 Serra1 - Áreas de Levantamento.kmz',
-        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)',
-        dataCadastro: '2025-01-11'
-      }
-    ]
+    documentos: [],
+    documentosList: []
   },
   {
     id: 'bess-002',
@@ -228,36 +180,8 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     historico: [
       { data: '2024-03-10', autor: 'Brasol Team', acao: 'Cadastro Concluído', detalhe: 'Inserção de dados no portal SEMA-MA.' }
     ],
-    documentos: [
-      { nome: 'Protocolo_CUOS_Patos.pdf', tipo: 'CUOS', status: 'Em Análise' },
-      { nome: 'Estudo_Preliminar_Patos.pdf', tipo: 'Estudo Ambiental', status: 'Em Análise' }
-    ],
-    documentosList: [
-      {
-        id: 'doc-004',
-        projectId: 'bess-002',
-        projectName: 'São João dos Patos - MA',
-        nome: 'Requerimento e Protocolo de CUOS na Prefeitura de São João dos Patos',
-        tipo: 'CUOS',
-        status: 'Em Análise',
-        dataEmissao: '2024-03-15',
-        numeroProtocolo: 'PROT-CUOS-2024-998',
-        observacoes: 'Aguardando validação técnica pelo setor de urbanismo municipal.',
-        nomeArquivoOriginal: 'Protocolo_CUOS_Patos.pdf',
-        cadastradoPor: 'EcoBrasil Consultoria'
-      },
-      {
-        id: 'doc-005',
-        projectId: 'bess-002',
-        projectName: 'São João dos Patos - MA',
-        nome: 'Polígono KMZ da Gleba Agrícola BESS (12.5 ha)',
-        tipo: 'KMZ / Geoespacial',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-02-10',
-        nomeArquivoOriginal: '13_Sao.Joao.Patos.kmz',
-        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)'
-      }
-    ]
+    documentos: [],
+    documentosList: []
   },
   {
     id: 'bess-003',
@@ -311,37 +235,8 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     historico: [
       { data: '2024-05-15', autor: 'Brasol Direction', acao: 'Cancelamento Registrado', detalhe: 'Cancelado por opção estratégica da Brasol.' }
     ],
-    documentos: [
-      { nome: 'CUOS_Eldorado_3350.pdf', tipo: 'CUOS', status: 'Aprovado' }
-    ],
-    documentosList: [
-      {
-        id: 'doc-006',
-        projectId: 'bess-003',
-        projectName: 'Eldorado do Sul 1 - RS',
-        nome: 'Certidão de Uso do Solo Matrícula nº 3350',
-        tipo: 'CUOS',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-03-22',
-        numeroProtocolo: 'CUOS-ELD-3350',
-        observacoes: 'Certidão municipal favorável. Projeto posteriormente descontinuado por decisão da Brasol.',
-        nomeArquivoOriginal: 'CUOS_Eldorado_3350.pdf',
-        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)'
-      },
-      {
-        id: 'doc-007',
-        projectId: 'bess-003',
-        projectName: 'Eldorado do Sul 1 - RS',
-        nome: 'Ofício de Solicitação de Cancelamento do Processo FEPAM',
-        tipo: 'Certidão / Licença',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-05-15',
-        numeroProtocolo: 'OF-BRASOL-2024-08',
-        observacoes: 'Notificação formal enviada à FEPAM comunicando a desistência do projeto.',
-        nomeArquivoOriginal: 'Oficio_Cancelamento_Brasol_FEPAM.pdf',
-        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)'
-      }
-    ]
+    documentos: [],
+    documentosList: []
   },
   {
     id: 'bess-004',
@@ -370,7 +265,7 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
       [-30.0930, -51.3380],
       [-30.0925, -51.3440]
     ],
-    investimentoEstimatedMilhoes: 50.0,
+    investimentoEstimadoMilhoes: 50.0,
     dataInicio: '2024-01-20',
     dataPrevisaoConclusao: '2024-08-30',
     etapas: [
@@ -382,24 +277,8 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     historico: [
       { data: '2024-05-15', autor: 'Brasol Direction', acao: 'Cancelamento Registrado', detalhe: 'Cancelado por opção estratégica da Brasol.' }
     ],
-    documentos: [
-      { nome: 'CUOS_Eldorado_9233.pdf', tipo: 'CUOS', status: 'Aprovado' }
-    ],
-    documentosList: [
-      {
-        id: 'doc-008',
-        projectId: 'bess-004',
-        projectName: 'Eldorado do Sul 2 - RS',
-        nome: 'Certidão de Uso do Solo Matrícula nº 9233',
-        tipo: 'CUOS',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-03-22',
-        numeroProtocolo: 'CUOS-ELD-9233',
-        observacoes: 'Certidão municipal deferida.',
-        nomeArquivoOriginal: 'CUOS_Eldorado_9233.pdf',
-        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)'
-      }
-    ]
+    documentos: [],
+    documentosList: []
   },
   {
     id: 'bess-005',
@@ -440,38 +319,8 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     ],
     tratativas: [],
     historico: [],
-    documentos: [
-      { nome: 'CUOS_Quixere_CE.pdf', tipo: 'CUOS', status: 'Aprovado' },
-      { nome: 'RAS_Quixere_BESS.pdf', tipo: 'Estudo Ambiental', status: 'Em Análise' }
-    ],
-    documentosList: [
-      {
-        id: 'doc-009',
-        projectId: 'bess-005',
-        projectName: 'Quixeré - CE',
-        nome: 'Certidão de Conformidade de Uso do Solo - Quixeré/CE',
-        tipo: 'CUOS',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-02-05',
-        numeroProtocolo: 'CUOS-QUIX-2024-11',
-        observacoes: 'Certidão em conformidade com o plano diretor do município.',
-        nomeArquivoOriginal: 'CUOS_Quixere_CE.pdf',
-        cadastradoPor: 'EcoBrasil Consultoria'
-      },
-      {
-        id: 'doc-010',
-        projectId: 'bess-005',
-        projectName: 'Quixeré - CE',
-        nome: 'Relatório Ambiental Simplificado - RAS BESS Quixeré',
-        tipo: 'Estudo Ambiental',
-        status: 'Em Análise',
-        dataEmissao: '2024-05-02',
-        numeroProtocolo: 'RAS-SEMACE-2024-88',
-        observacoes: 'Estudo protocolado no sistema Natuur/SEMACE.',
-        nomeArquivoOriginal: 'RAS_Quixere_BESS.pdf',
-        cadastradoPor: 'EcoBrasil Consultoria'
-      }
-    ]
+    documentos: [],
+    documentosList: []
   },
   {
     id: 'bess-006',
@@ -512,25 +361,8 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     ],
     tratativas: [],
     historico: [],
-    documentos: [
-      { nome: 'CUOS_Piripiri.pdf', tipo: 'CUOS', status: 'Aprovado' },
-      { nome: 'Piripiri 5ha.kmz', tipo: 'KMZ / Geoespacial', status: 'Aprovado' }
-    ],
-    documentosList: [
-      {
-        id: 'doc-011',
-        projectId: 'bess-006',
-        projectName: 'Piripiri - PI',
-        nome: 'Certidão de Uso do Solo - Piripiri/PI (5 ha)',
-        tipo: 'CUOS',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-03-01',
-        numeroProtocolo: 'CUOS-PIR-2024-03',
-        observacoes: 'Certidão emitida para a área de 5.0 hectares.',
-        nomeArquivoOriginal: 'CUOS_Piripiri.pdf',
-        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)'
-      }
-    ]
+    documentos: [],
+    documentosList: []
   },
   {
     id: 'bess-007',
@@ -570,24 +402,8 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     ],
     tratativas: [],
     historico: [],
-    documentos: [
-      { nome: 'CUOS_Eliseu_Martins.pdf', tipo: 'CUOS', status: 'Aprovado' }
-    ],
-    documentosList: [
-      {
-        id: 'doc-012',
-        projectId: 'bess-007',
-        projectName: 'Eliseu Martins - PI',
-        nome: 'Certidão de Uso do Solo - Eliseu Martins/PI (7.9 ha)',
-        tipo: 'CUOS',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-02-28',
-        numeroProtocolo: 'CUOS-EM-2024-09',
-        observacoes: 'Validação municipal concluída.',
-        nomeArquivoOriginal: 'CUOS_Eliseu_Martins.pdf',
-        cadastradoPor: 'EcoBrasil Consultoria'
-      }
-    ]
+    documentos: [],
+    documentosList: []
   },
   {
     id: 'bess-008',
@@ -627,37 +443,7 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     ],
     tratativas: [],
     historico: [],
-    documentos: [
-      { nome: 'CUOS_Jaiba_MG.pdf', tipo: 'CUOS', status: 'Aprovado' },
-      { nome: 'FCEU_SEMAD_Jaiba.pdf', tipo: 'Parecer Técnico', status: 'Em Análise' }
-    ],
-    documentosList: [
-      {
-        id: 'doc-013',
-        projectId: 'bess-008',
-        projectName: 'Jaíba - MG',
-        nome: 'Certidão de Uso e Ocupação do Solo - Jaíba/MG (9.5 ha)',
-        tipo: 'CUOS',
-        status: 'Emitido / Válido',
-        dataEmissao: '2024-01-22',
-        numeroProtocolo: 'CUOS-JAIBA-2024-01',
-        observacoes: 'Certidão de conformidade urbanística aprovada.',
-        nomeArquivoOriginal: 'CUOS_Jaiba_MG.pdf',
-        cadastradoPor: 'Maurivan Vaz Ribeiro (Brasol)'
-      },
-      {
-        id: 'doc-014',
-        projectId: 'bess-008',
-        projectName: 'Jaíba - MG',
-        nome: 'Formulário FCEU e Anexo Georreferenciado SLA-SEMAD',
-        tipo: 'Parecer Técnico',
-        status: 'Em Análise',
-        dataEmissao: '2024-04-05',
-        numeroProtocolo: 'SLA-MG-2024-7712',
-        observacoes: 'Protocolado no sistema SLA da Secretaria Estadual de Meio Ambiente de MG.',
-        nomeArquivoOriginal: 'FCEU_SEMAD_Jaiba.pdf',
-        cadastradoPor: 'EcoBrasil Consultoria'
-      }
-    ]
+    documentos: [],
+    documentosList: []
   }
 ];

@@ -28,12 +28,17 @@ export const App: React.FC = () => {
     return saved ? JSON.parse(saved) : INITIAL_BESS_PROJECTS;
   });
 
-  // Extract all initial documents from projects for documents state
-  const initialDocsList = INITIAL_BESS_PROJECTS.flatMap(p => p.documentosList || []);
-
+  // Documents state initialized as empty [] per user request ("apague todos os documentos")
   const [documents, setDocuments] = useState<BESSDocument[]>(() => {
     const savedDocs = localStorage.getItem('brasol_bess_documents');
-    return savedDocs ? JSON.parse(savedDocs) : initialDocsList;
+    if (savedDocs) {
+      try {
+        return JSON.parse(savedDocs);
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
   });
 
   // Default theme is 'light' (fundo branco) per user requirement
@@ -134,9 +139,15 @@ export const App: React.FC = () => {
     });
   };
 
-  // Delete Document
+  // Delete Single Document
   const handleDeleteDocument = (docId: string) => {
     setDocuments(prev => prev.filter(d => d.id !== docId));
+  };
+
+  // Clear All Documents
+  const handleClearAllDocuments = () => {
+    setDocuments([]);
+    localStorage.removeItem('brasol_bess_documents');
   };
 
   const handleOpenEdit = (project: BESSProject) => {
@@ -298,6 +309,7 @@ export const App: React.FC = () => {
                 onOpenNewDocument={handleOpenNewDoc}
                 onEditDocument={handleOpenEditDoc}
                 onDeleteDocument={handleDeleteDocument}
+                onClearAllDocuments={handleClearAllDocuments}
               />
             </div>
           )}

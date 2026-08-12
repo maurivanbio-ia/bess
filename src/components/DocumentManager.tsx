@@ -28,6 +28,7 @@ interface DocumentManagerProps {
   onOpenNewDocument: (projectId?: string) => void;
   onEditDocument: (document: BESSDocument) => void;
   onDeleteDocument: (docId: string) => void;
+  onClearAllDocuments: () => void;
 }
 
 export const DocumentManager: React.FC<DocumentManagerProps> = ({
@@ -35,7 +36,8 @@ export const DocumentManager: React.FC<DocumentManagerProps> = ({
   documents,
   onOpenNewDocument,
   onEditDocument,
-  onDeleteDocument
+  onDeleteDocument,
+  onClearAllDocuments
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [projectFilter, setProjectFilter] = useState('all');
@@ -90,6 +92,10 @@ export const DocumentManager: React.FC<DocumentManagerProps> = ({
 
   // Export Inventory to Excel
   const handleExportExcel = () => {
+    if (documents.length === 0) {
+      alert('Não há documentos cadastrados para exportar.');
+      return;
+    }
     const rows = filteredDocs.map(d => ({
       'Nomenclatura do Documento': d.nome,
       'Empreendimento BESS': d.projectName,
@@ -126,6 +132,20 @@ export const DocumentManager: React.FC<DocumentManagerProps> = ({
           </div>
 
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            {documents.length > 0 && (
+              <button 
+                className="btn btn-outline" 
+                style={{ color: '#dc2626', borderColor: '#fca5a5' }}
+                onClick={() => {
+                  if (window.confirm('Tem certeza de que deseja apagar TODOS os documentos do repositório?')) {
+                    onClearAllDocuments();
+                  }
+                }}
+              >
+                <Trash2 size={16} /> Apagar Todos os Documentos
+              </button>
+            )}
+
             <button className="btn btn-outline" onClick={handleExportExcel}>
               <Download size={16} /> Exportar Inventário (.xlsx)
             </button>
@@ -252,8 +272,21 @@ export const DocumentManager: React.FC<DocumentManagerProps> = ({
             <tbody>
               {filteredDocs.length === 0 ? (
                 <tr>
-                  <td colSpan={9} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-                    Nenhum documento encontrado com os filtros informados.
+                  <td colSpan={9} style={{ textAlign: 'center', padding: '3.5rem 1rem', color: 'var(--text-muted)' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+                      <FileText size={36} style={{ color: 'var(--text-muted)', opacity: 0.5 }} />
+                      <strong style={{ fontSize: '1rem', color: 'var(--text-primary)' }}>Nenhum documento cadastrado no momento.</strong>
+                      <p style={{ fontSize: '0.825rem', maxWidth: '420px', margin: '0 auto' }}>
+                        Clique no botão <strong>"+ Cadastrar Novo Documento"</strong> para adicionar manualmente arquivos, certidões CUOS e pareceres aos empreendimentos BESS.
+                      </p>
+                      <button 
+                        className="btn btn-primary" 
+                        style={{ marginTop: '0.5rem' }}
+                        onClick={() => onOpenNewDocument()}
+                      >
+                        <Plus size={16} /> Cadastrar Primeiro Documento
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ) : (
