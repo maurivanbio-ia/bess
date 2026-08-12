@@ -702,20 +702,22 @@ h1, h2, h3, h4, h5, h6 {
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 }
 
 .data-table th {
   background: var(--bg-card-hover);
-  padding: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.725rem;
   font-weight: 700;
   color: var(--text-secondary);
   text-align: left;
   border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
 }
 
 .data-table td {
-  padding: 1rem;
+  padding: 0.5rem 0.75rem;
   border-bottom: 1px solid var(--border-color);
   color: var(--text-primary);
 }

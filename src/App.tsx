@@ -9,7 +9,7 @@ import { ProcessTable } from './components/ProcessTable';
 import { ProcessModal } from './components/ProcessModal';
 import { TratativaModal } from './components/TratativaModal';
 import { DriveFileManager } from './components/DriveFileManager';
-import { DocumentModal } from './components/DocumentModal';
+
 import { Geoportal } from './components/Geoportal';
 import { Footer } from './components/Footer';
 
@@ -59,10 +59,7 @@ export const App: React.FC = () => {
   const [isTratativaModalOpen, setIsTratativaModalOpen] = useState(false);
   const [defaultTratativaProjId, setDefaultTratativaProjId] = useState<string | undefined>(undefined);
 
-  // Document Modal State
-  const [isDocModalOpen, setIsDocModalOpen] = useState(false);
-  const [editingDoc, setEditingDoc] = useState<BESSDocument | null>(null);
-  const [defaultDocProjId, setDefaultDocProjId] = useState<string | undefined>(undefined);
+
 
   // Sync projects with localStorage
   useEffect(() => {
@@ -204,16 +201,7 @@ export const App: React.FC = () => {
     setIsTratativaModalOpen(true);
   };
 
-  const handleOpenNewDoc = (projId?: string) => {
-    setEditingDoc(null);
-    setDefaultDocProjId(projId);
-    setIsDocModalOpen(true);
-  };
 
-  const handleOpenEditDoc = (doc: BESSDocument) => {
-    setEditingDoc(doc);
-    setIsDocModalOpen(true);
-  };
 
   // Export Data to Excel (.xlsx)
   const handleExportData = () => {
@@ -464,15 +452,7 @@ export const App: React.FC = () => {
         defaultProjectId={defaultTratativaProjId}
       />
 
-      {/* Modal para Cadastro/Edição de Documentos */}
-      <DocumentModal
-        isOpen={isDocModalOpen}
-        onClose={() => setIsDocModalOpen(false)}
-        onSaveDocument={handleSaveDocument}
-        projects={projects}
-        defaultProjectId={defaultDocProjId}
-        editingDocument={editingDoc}
-      />
+
 
       {/* Corporate Footer */}
       <Footer />
