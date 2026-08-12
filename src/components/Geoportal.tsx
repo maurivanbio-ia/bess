@@ -18,7 +18,7 @@ interface GeoportalProps {
 
 export const Geoportal: React.FC<GeoportalProps> = ({ projects }) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || '');
-  const [mapType, setMapType] = useState<'streets' | 'satellite'>('streets');
+  const [mapType, setMapType] = useState<'streets' | 'satellite'>('satellite');
 
   const mapInstanceRef = useRef<L.Map | null>(null);
   const streetTileRef = useRef<L.TileLayer | null>(null);
@@ -55,7 +55,7 @@ export const Geoportal: React.FC<GeoportalProps> = ({ projects }) => {
       maxZoom: 18,
     });
 
-    streetTile.addTo(map);
+    satelliteTile.addTo(map);
 
     streetTileRef.current = streetTile;
     satelliteTileRef.current = satelliteTile;
