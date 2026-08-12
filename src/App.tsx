@@ -316,6 +316,7 @@ export const App: React.FC = () => {
         {/* Left Sidebar Menu */}
         <Sidebar
           activeTab={activeTab}
+          onTabChange={setActiveTab}
           theme={theme}
           onToggleTheme={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')}
           documentsCount={documents.length}
