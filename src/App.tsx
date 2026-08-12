@@ -333,12 +333,6 @@ export const App: React.FC = () => {
             <div>
               <DriveFileManager
                 projects={projects}
-                documents={documents}
-                onOpenNewDocument={handleOpenNewDoc}
-                onEditDocument={handleOpenEditDoc}
-                onDeleteDocument={handleDeleteDocument}
-                onUploadDropFiles={handleUploadDropFiles}
-                onClearAllDocuments={handleClearAllDocuments}
               />
             </div>
           )}

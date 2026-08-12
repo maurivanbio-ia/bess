@@ -52,12 +52,6 @@ import {
 
 interface DriveFileManagerProps {
   projects: BESSProject[];
-  documents: any[];
-  onOpenNewDocument: (projectId?: string) => void;
-  onEditDocument: (document: any) => void;
-  onDeleteDocument: (docId: string) => void;
-  onUploadDropFiles: (files: FileList, projectId?: string) => void;
-  onClearAllDocuments: () => void;
 }
 
 export const DriveFileManager: React.FC<DriveFileManagerProps> = () => {
