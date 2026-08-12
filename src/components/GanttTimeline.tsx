@@ -16,8 +16,8 @@ import {
   PhoneCall,
   Video,
   Mail,
-  FileCheck,
-  Pin
+  X,
+  ShieldCheck
 } from 'lucide-react';
 
 interface GanttTimelineProps {
@@ -27,7 +27,7 @@ interface GanttTimelineProps {
 
 export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTratativaModal }) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || '');
-  const [activeTratativaTooltip, setActiveTratativaTooltip] = useState<EnvironmentalInteraction | null>(null);
+  const [viewingTratativasModalProject, setViewingTratativasModalProject] = useState<BESSProject | null>(null);
 
   const selectedProject = projects.find(p => p.id === selectedProjectId) || projects[0];
 
@@ -126,8 +126,8 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
                     <td>{proj.dataPrevisaoConclusao}</td>
                     
                     {/* Visual Progress Bar with Tratativas Pins */}
-                    <td style={{ width: '220px' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                    <td style={{ width: '230px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                           <div className="progress-bar-bg" style={{ position: 'relative', height: '10px' }}>
                             <div 
@@ -147,11 +147,37 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
                           </span>
                         </div>
 
-                        {/* Tratativas Pin Indicator */}
-                        {tratativasCount > 0 && (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.7rem', color: 'var(--brasol-teal)', fontWeight: 600 }}>
-                            <MessageSquare size={11} /> {tratativasCount} tratativa(s) registrada(s)
-                          </div>
+                        {/* Interactive Tratativas Badge Button */}
+                        {tratativasCount > 0 ? (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedProjectId(proj.id);
+                              setViewingTratativasModalProject(proj);
+                            }}
+                            className="btn btn-outline"
+                            style={{ 
+                              display: 'inline-flex', 
+                              alignItems: 'center', 
+                              gap: '0.3rem', 
+                              fontSize: '0.725rem', 
+                              color: 'var(--brasol-teal)', 
+                              fontWeight: 700, 
+                              padding: '0.2rem 0.55rem', 
+                              borderRadius: 'var(--radius-full)',
+                              background: 'rgba(2, 132, 199, 0.1)',
+                              border: '1px solid rgba(2, 132, 199, 0.25)',
+                              cursor: 'pointer',
+                              width: 'fit-content'
+                            }}
+                            title="Clique aqui para visualizar o resumo detalhado das tratativas"
+                          >
+                            <MessageSquare size={12} /> {tratativasCount} tratativa(s) registrada(s)
+                          </button>
+                        ) : (
+                          <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                            Sem tratativas registradas
+                          </span>
                         )}
                       </div>
                     </td>
@@ -242,7 +268,7 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
             </div>
           </div>
 
-          {/* Coluna Direita: Tratativas com o Órgão Ambiental Marcadas na Linha do Tempo */}
+          {/* Coluna Direita: Tratativas Ambientais Marcadas */}
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <div>
@@ -337,6 +363,107 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
 
         </div>
       )}
+
+      {/* Modal Interativo de Detalhes da Tratativa ao Clicar no Badge */}
+      {viewingTratativasModalProject && (
+        <div className="modal-overlay">
+          <div className="modal-content" style={{ maxWidth: '640px' }}>
+            
+            <div className="modal-header">
+              <div>
+                <h3 style={{ fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--brasol-teal)' }}>
+                  <MessageSquare size={20} /> Tratativas com o Órgão Ambiental ({viewingTratativasModalProject.orgaoLicenciador})
+                </h3>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                  Empreendimento: <strong>{viewingTratativasModalProject.nome}</strong> ({viewingTratativasModalProject.uf})
+                </span>
+              </div>
+
+              <button className="btn-icon" onClick={() => setViewingTratativasModalProject(null)}>
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="modal-body" style={{ maxHeight: '65vh', overflowY: 'auto' }}>
+              {(!viewingTratativasModalProject.tratativas || viewingTratativasModalProject.tratativas.length === 0) ? (
+                <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>
+                  Nenhuma tratativa ambiental registrada para este projeto ainda.
+                </div>
+              ) : (
+                viewingTratativasModalProject.tratativas.map((t, idx) => (
+                  <div 
+                    key={t.id || idx}
+                    style={{
+                      background: 'var(--bg-main)',
+                      padding: '1.25rem',
+                      borderRadius: 'var(--radius-sm)',
+                      border: '1px solid var(--border-color)',
+                      borderLeft: '4px solid var(--brasol-teal)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.6rem'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        {getTipoIcon(t.tipo)}
+                        <strong style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}>{t.tipo}</strong>
+                      </div>
+                      <span className={`badge ${t.statusTratativa === 'Concluído' ? 'badge-green' : 'badge-amber'}`}>
+                        {t.statusTratativa}
+                      </span>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                      <div>📅 <strong>Data:</strong> {t.data}</div>
+                      <div>⏰ <strong>Horário:</strong> {t.horario}</div>
+                      <div>🏛️ <strong>Órgão:</strong> {t.orgao || viewingTratativasModalProject.orgaoLicenciador}</div>
+                      <div>👤 <strong>Atendente do Órgão:</strong> <span style={{ color: 'var(--brasol-teal)', fontWeight: 700 }}>{t.atendente}</span></div>
+                    </div>
+
+                    <div style={{ marginTop: '0.25rem' }}>
+                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)' }}>RESUMO DA TRATATIVA REALIZADA:</label>
+                      <div style={{ background: 'var(--bg-card)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', fontSize: '0.85rem', color: 'var(--text-primary)', marginTop: '0.25rem', lineHeight: '1.45' }}>
+                        {t.resumo}
+                      </div>
+                    </div>
+
+                    {t.observacoes && (
+                      <div style={{ fontSize: '0.775rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                        📌 <strong>Observações Adicionais:</strong> {t.observacoes}
+                      </div>
+                    )}
+
+                    {t.cadastradoPor && (
+                      <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', textAlign: 'right', marginTop: '0.2rem' }}>
+                        Registrado por: {t.cadastradoPor}
+                      </div>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+
+            <div className="modal-footer">
+              <button 
+                className="btn btn-outline"
+                onClick={() => {
+                  const projId = viewingTratativasModalProject.id;
+                  setViewingTratativasModalProject(null);
+                  onOpenTratativaModal(projId);
+                }}
+              >
+                <Plus size={14} /> + Nova Tratativa
+              </button>
+              <button className="btn btn-primary" onClick={() => setViewingTratativasModalProject(null)}>
+                Fechar
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
