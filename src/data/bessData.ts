@@ -89,12 +89,14 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     areaHectares: 8.2,
     areaM2: 82000,
     kmzFileName: '20251001 Serra1 - Áreas de Levantamento.kmz',
-    centerCoordinates: [-28.3233, -49.6567],
+    centerCoordinates: [-28.36880, -49.57228],
     polygonCoordinates: [
-      [-28.3210, -49.6585],
-      [-28.3212, -49.6545],
-      [-28.3255, -49.6550],
-      [-28.3250, -49.6590]
+      [-28.36880, -49.57228],
+      [-28.36858, -49.57337],
+      [-28.36716, -49.57269],
+      [-28.36715, -49.57102],
+      [-28.36710, -49.56910],
+      [-28.37116, -49.56712]
     ],
     investimentoEstimadoMilhoes: 45.0,
     dataInicio: '2024-01-15',
@@ -146,12 +148,13 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     areaHectares: 12.5,
     areaM2: 125000,
     kmzFileName: '13_Sao.Joao.Patos.kmz',
-    centerCoordinates: [-6.5550, -43.7522],
+    centerCoordinates: [-6.70259, -43.56166],
     polygonCoordinates: [
-      [-6.5520, -43.7550],
-      [-6.5525, -43.7490],
-      [-6.5580, -43.7500],
-      [-6.5575, -43.7560]
+      [-6.70259, -43.56166],
+      [-6.70258, -43.56173],
+      [-6.69992, -43.56138],
+      [-6.69880, -43.56016],
+      [-6.69996, -43.56131]
     ],
     investimentoEstimadoMilhoes: 65.0,
     dataInicio: '2024-02-01',
@@ -203,12 +206,13 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     areaHectares: 15.0,
     areaM2: 150000,
     kmzFileName: '10_Eldorado.Sul_Matricula3350.kmz',
-    centerCoordinates: [-30.1247, -51.4028],
+    centerCoordinates: [-30.06743, -51.52857],
     polygonCoordinates: [
-      [-30.1210, -51.4060],
-      [-30.1215, -51.3990],
-      [-30.1280, -51.4000],
-      [-30.1275, -51.4070]
+      [-30.06743, -51.52857],
+      [-30.07947, -51.52724],
+      [-30.07897, -51.52993],
+      [-30.06445, -51.53203],
+      [-30.06319, -51.53222]
     ],
     investimentoEstimadoMilhoes: 55.0,
     dataInicio: '2024-01-20',
@@ -258,12 +262,13 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     areaHectares: 11.8,
     areaM2: 118000,
     kmzFileName: '10_Eldorado.Sul_Matricula9233.kmz',
-    centerCoordinates: [-30.1300, -51.4100],
+    centerCoordinates: [-30.05971, -51.54041],
     polygonCoordinates: [
-      [-30.1270, -51.4130],
-      [-30.1275, -51.4070],
-      [-30.1340, -51.4080],
-      [-30.1335, -51.4140]
+      [-30.05971, -51.54041],
+      [-30.05971, -51.54010],
+      [-30.06031, -51.53981],
+      [-30.06055, -51.53955],
+      [-30.06083, -51.53936]
     ],
     investimentoEstimadoMilhoes: 50.0,
     dataInicio: '2024-01-20',
@@ -300,12 +305,14 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     areaHectares: 10.4,
     areaM2: 104000,
     kmzFileName: '10_Planta.Georreferenciada_Shapefile.KMZ.kmz',
-    centerCoordinates: [-5.1242, -38.0386],
+    centerCoordinates: [-5.04171, -37.82854],
     polygonCoordinates: [
-      [-5.1210, -38.0410],
-      [-5.1215, -38.0350],
-      [-5.1280, -38.0360],
-      [-5.1275, -38.0420]
+      [-5.04171, -37.82854],
+      [-5.04184, -37.82652],
+      [-5.03925, -37.82582],
+      [-5.03900, -37.82838],
+      [-5.03953, -37.82909],
+      [-5.04062, -37.83004]
     ],
     investimentoEstimadoMilhoes: 70.0,
     dataInicio: '2024-01-10',
@@ -342,12 +349,14 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     areaHectares: 5.0,
     areaM2: 50000,
     kmzFileName: 'Piripiri 5ha.kmz',
-    centerCoordinates: [-4.3231, -41.8269],
+    centerCoordinates: [-4.27725, -41.73264],
     polygonCoordinates: [
-      [-4.3210, -41.8290],
-      [-4.3215, -41.8250],
-      [-4.3280, -41.8260],
-      [-4.3275, -41.8280]
+      [-4.27725, -41.73264],
+      [-4.27655, -41.73141],
+      [-4.27682, -41.73146],
+      [-4.27685, -41.73045],
+      [-4.27701, -41.73045],
+      [-4.27738, -41.73033]
     ],
     investimentoEstimadoMilhoes: 30.0,
     dataInicio: '2024-02-15',
@@ -384,12 +393,14 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     areaHectares: 7.9,
     areaM2: 79000,
     kmzFileName: 'Eliseu Martins - 7,9ha.kmz',
-    centerCoordinates: [-8.1425, -43.7122],
+    centerCoordinates: [-8.12202, -43.65481],
     polygonCoordinates: [
-      [-8.1400, -43.7150],
-      [-8.1405, -43.7100],
-      [-8.1480, -43.7110],
-      [-8.1475, -43.7160]
+      [-8.12202, -43.65481],
+      [-8.12175, -43.65310],
+      [-8.11749, -43.65391],
+      [-8.11672, -43.65395],
+      [-8.11674, -43.65482],
+      [-8.11778, -43.65481]
     ],
     investimentoEstimadoMilhoes: 50.0,
     dataInicio: '2024-02-10',
@@ -425,12 +436,13 @@ export const INITIAL_BESS_PROJECTS: BESSProject[] = [
     areaHectares: 9.5,
     areaM2: 95000,
     kmzFileName: 'Area Locação - Jaiba.kml',
-    centerCoordinates: [-15.1917, -43.7328],
+    centerCoordinates: [-15.26056, -43.73306],
     polygonCoordinates: [
-      [-15.1890, -43.7360],
-      [-15.1895, -43.7300],
-      [-15.1980, -43.7310],
-      [-15.1975, -43.7370]
+      [-15.26056, -43.73306],
+      [-15.26209, -43.73613],
+      [-15.26018, -43.73718],
+      [-15.25987, -43.73711],
+      [-15.25834, -43.73423]
     ],
     investimentoEstimadoMilhoes: 70.0,
     dataInicio: '2024-01-05',
