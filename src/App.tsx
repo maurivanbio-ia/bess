@@ -20,13 +20,56 @@ import {
   FileText
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
+import { fetchProjectsFromDB, saveProjectToDB, deleteProjectFromDB } from './services/supabaseService';
+import { supabase } from './config/supabaseClient';
 
 export const App: React.FC = () => {
-  // Projects state initialized with local storage or initial datasets
+  // Projects state initialized with local storage for instant loading
   const [projects, setProjects] = useState<BESSProject[]>(() => {
     const saved = localStorage.getItem('brasol_bess_projects');
     return saved ? JSON.parse(saved) : INITIAL_BESS_PROJECTS;
   });
+
+  // Load from Supabase on mount and subscribe to Realtime changes
+  useEffect(() => {
+    const loadData = async () => {
+      const dbProjects = await fetchProjectsFromDB();
+      if (dbProjects.length > 0) {
+        setProjects(dbProjects);
+      } else {
+        // Se o banco estiver vazio, semeia os projetos iniciais (apenas na primeira vez)
+        for (const proj of INITIAL_BESS_PROJECTS) {
+          await saveProjectToDB(proj);
+        }
+      }
+    };
+    
+    loadData();
+
+    // Subscribe to realtime changes on bess_projects table
+    const subscription = supabase
+      .channel('public:bess_projects')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'bess_projects' }, (payload) => {
+        if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
+          const updatedProject = payload.new.data as BESSProject;
+          setProjects(prev => {
+            const exists = prev.find(p => p.id === updatedProject.id);
+            if (exists) {
+              return prev.map(p => p.id === updatedProject.id ? updatedProject : p);
+            } else {
+              return [...prev, updatedProject];
+            }
+          });
+        } else if (payload.eventType === 'DELETE') {
+          setProjects(prev => prev.filter(p => p.id !== payload.old.id));
+        }
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
+  }, []);
 
   // Documents state initialized with local storage or empty list
   const [documents, setDocuments] = useState<BESSDocument[]>(() => {
@@ -111,7 +154,8 @@ export const App: React.FC = () => {
   });
 
   // Save/Update BESS Project
-  const handleSaveProject = (updatedProject: BESSProject) => {
+  const handleSaveProject = async (updatedProject: BESSProject) => {
+    // Optimistic UI update
     setProjects(prev => {
       const exists = prev.some(p => p.id === updatedProject.id);
       if (exists) {
@@ -119,32 +163,42 @@ export const App: React.FC = () => {
       }
       return [updatedProject, ...prev];
     });
+    // Save to DB
+    await saveProjectToDB(updatedProject);
   };
 
   // Save New Environmental Interaction / Tratativa
-  const handleSaveTratativa = (projectId: string, newTratativa: EnvironmentalInteraction) => {
-    setProjects(prev => {
-      return prev.map(p => {
-        if (p.id === projectId) {
-          const updatedTratativas = [newTratativa, ...(p.tratativas || [])];
-          return { ...p, tratativas: updatedTratativas };
-        }
-        return p;
-      });
-    });
+  const handleSaveTratativa = async (projectId: string, newTratativa: EnvironmentalInteraction) => {
+    const project = projects.find(p => p.id === projectId);
+    if (!project) return;
+    
+    const updatedProject = {
+      ...project,
+      tratativas: [newTratativa, ...(project.tratativas || [])]
+    };
+    
+    // Optimistic UI update
+    setProjects(prev => prev.map(p => p.id === projectId ? updatedProject : p));
+    
+    // Save to DB
+    await saveProjectToDB(updatedProject);
   };
 
   // Delete Environmental Interaction / Tratativa
-  const handleDeleteTratativa = (projectId: string, tratativaId: string) => {
-    setProjects(prev => {
-      return prev.map(p => {
-        if (p.id === projectId) {
-          const updatedTratativas = (p.tratativas || []).filter(t => t.id !== tratativaId);
-          return { ...p, tratativas: updatedTratativas };
-        }
-        return p;
-      });
-    });
+  const handleDeleteTratativa = async (projectId: string, tratativaId: string) => {
+    const project = projects.find(p => p.id === projectId);
+    if (!project) return;
+    
+    const updatedProject = {
+      ...project,
+      tratativas: (project.tratativas || []).filter(t => t.id !== tratativaId)
+    };
+    
+    // Optimistic UI update
+    setProjects(prev => prev.map(p => p.id === projectId ? updatedProject : p));
+    
+    // Save to DB
+    await saveProjectToDB(updatedProject);
   };
 
   // Save / Update Document
