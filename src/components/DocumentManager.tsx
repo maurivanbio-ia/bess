@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BESSDocument, BESSProject } from '../data/bessData';
+import { downloadBESSFile } from '../utils/fileDownloader';
 import { 
   FileText, 
   Plus, 
@@ -265,7 +266,7 @@ export const DocumentManager: React.FC<DocumentManagerProps> = ({
                 <th>Status</th>
                 <th>Protocolo / Processo</th>
                 <th>Emissão / Validade</th>
-                <th>Arquivo Anexo</th>
+                <th>Baixar Arquivo Original</th>
                 <th style={{ textAlign: 'right' }}>Ações</th>
               </tr>
             </thead>
@@ -292,6 +293,8 @@ export const DocumentManager: React.FC<DocumentManagerProps> = ({
               ) : (
                 filteredDocs.map((doc) => {
                   const isExpanded = expandedDocId === doc.id;
+                  const originalFileName = doc.nomeArquivoOriginal || `${doc.nome}.pdf`;
+
                   return (
                     <React.Fragment key={doc.id}>
                       <tr>
@@ -344,22 +347,14 @@ export const DocumentManager: React.FC<DocumentManagerProps> = ({
                         </td>
 
                         <td>
-                          <a
-                            href={doc.nomeArquivoOriginal?.endsWith('.kmz') || doc.nomeArquivoOriginal?.endsWith('.kml') 
-                              ? `/kmz/${doc.nomeArquivoOriginal}` 
-                              : '#'}
-                            download={doc.nomeArquivoOriginal}
-                            onClick={(e) => {
-                              if (!doc.nomeArquivoOriginal?.endsWith('.kmz') && !doc.nomeArquivoOriginal?.endsWith('.kml')) {
-                                e.preventDefault();
-                                alert(`Simulação de download do documento: ${doc.nomeArquivoOriginal}`);
-                              }
-                            }}
+                          <button
+                            onClick={() => downloadBESSFile(originalFileName, doc.nome, doc.observacoes)}
                             className="btn btn-outline"
                             style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', gap: '0.3rem' }}
+                            title={`Baixar ${originalFileName}`}
                           >
-                            <Paperclip size={12} /> {doc.nomeArquivoOriginal || 'Arquivo.pdf'}
-                          </a>
+                            <Paperclip size={12} /> {originalFileName}
+                          </button>
                         </td>
 
                         <td style={{ textAlign: 'right' }}>
@@ -402,7 +397,7 @@ export const DocumentManager: React.FC<DocumentManagerProps> = ({
                               <div style={{ marginTop: '0.75rem', display: 'flex', gap: '1.5rem', fontSize: '0.775rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
                                 <span>• <strong>Identificador Interno:</strong> {doc.id}</span>
                                 <span>• <strong>Data de Cadastro:</strong> {doc.dataCadastro || 'Recente'}</span>
-                                <span>• <strong>Nomenclatura do Arquivo Original:</strong> {doc.nomeArquivoOriginal}</span>
+                                <span>• <strong>Nomenclatura do Arquivo Original:</strong> {originalFileName}</span>
                               </div>
                             </div>
                           </td>
