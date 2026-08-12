@@ -128,6 +128,19 @@ export const App: React.FC = () => {
     });
   };
 
+  // Delete Environmental Interaction / Tratativa
+  const handleDeleteTratativa = (projectId: string, tratativaId: string) => {
+    setProjects(prev => {
+      return prev.map(p => {
+        if (p.id === projectId) {
+          const updatedTratativas = (p.tratativas || []).filter(t => t.id !== tratativaId);
+          return { ...p, tratativas: updatedTratativas };
+        }
+        return p;
+      });
+    });
+  };
+
   // Save / Update Document
   const handleSaveDocument = (doc: BESSDocument) => {
     setDocuments(prev => {
@@ -322,6 +335,7 @@ export const App: React.FC = () => {
               <GanttTimeline 
                 projects={filteredProjects} 
                 onOpenTratativaModal={handleOpenTratativaModal}
+                onDeleteTratativa={handleDeleteTratativa}
               />
             </div>
           )}

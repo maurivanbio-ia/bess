@@ -17,15 +17,17 @@ import {
   Video,
   Mail,
   X,
-  ShieldCheck
+  ShieldCheck,
+  Trash2
 } from 'lucide-react';
 
 interface GanttTimelineProps {
   projects: BESSProject[];
   onOpenTratativaModal: (projectId?: string) => void;
+  onDeleteTratativa: (projectId: string, tratativaId: string) => void;
 }
 
-export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTratativaModal }) => {
+export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTratativaModal, onDeleteTratativa }) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || '');
   const [viewingTratativasModalProject, setViewingTratativasModalProject] = useState<BESSProject | null>(null);
 
@@ -355,6 +357,22 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
                         Obs: {t.observacoes}
                       </p>
                     )}
+
+                    {/* Delete Button */}
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.35rem' }}>
+                      <button
+                        className="btn-icon"
+                        style={{ color: '#dc2626', fontSize: '0.725rem', display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-sm)', border: '1px solid #fca5a5', background: 'rgba(220, 38, 38, 0.06)' }}
+                        onClick={() => {
+                          if (window.confirm(`Confirma a exclusão desta tratativa (${t.tipo} - ${t.data})?`)) {
+                            onDeleteTratativa(selectedProject.id, t.id);
+                          }
+                        }}
+                        title="Excluir esta tratativa"
+                      >
+                        <Trash2 size={13} /> Excluir
+                      </button>
+                    </div>
                   </div>
                 ))
               )}
@@ -439,6 +457,29 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({ projects, onOpenTr
                         Registrado por: {t.cadastradoPor}
                       </div>
                     )}
+
+                    {/* Delete Button in Modal */}
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.35rem' }}>
+                      <button
+                        className="btn-icon"
+                        style={{ color: '#dc2626', fontSize: '0.725rem', display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-sm)', border: '1px solid #fca5a5', background: 'rgba(220, 38, 38, 0.06)' }}
+                        onClick={() => {
+                          if (window.confirm(`Confirma a exclusão desta tratativa (${t.tipo} - ${t.data})?`)) {
+                            onDeleteTratativa(viewingTratativasModalProject.id, t.id);
+                            // Update the modal project reference
+                            const updatedProject = { ...viewingTratativasModalProject, tratativas: (viewingTratativasModalProject.tratativas || []).filter(tr => tr.id !== t.id) };
+                            if (updatedProject.tratativas.length === 0) {
+                              setViewingTratativasModalProject(null);
+                            } else {
+                              setViewingTratativasModalProject(updatedProject);
+                            }
+                          }
+                        }}
+                        title="Excluir esta tratativa"
+                      >
+                        <Trash2 size={13} /> Excluir Tratativa
+                      </button>
+                    </div>
                   </div>
                 ))
               )}
